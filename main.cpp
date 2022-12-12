@@ -1,6 +1,4 @@
 #include<iostream>
-#include"Build_Automaton.h"
-#include"Automathon_to_table.h"
 #include"ExitationTo_Truth.h"
 #include"Quine_McCluskey.h"
 using namespace std;

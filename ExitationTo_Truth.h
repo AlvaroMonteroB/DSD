@@ -24,8 +24,8 @@ vector<vector<char>> Build_Exitation(string seq,string data){
         
         
     }
-    int tam=find_Mayor(nums);
-    int bit=Max_bitSize(tam);
+    int tam=find_Mayor(nums);//El mayor nos va a dar el rango de bits
+    int bit=Max_bitSize(tam);//conseguimos el numero de bits que se usarán
     cout<<bit<<endl;
     char *initial_state=(char*)calloc(nums.size(),sizeof(char));
     
