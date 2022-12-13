@@ -26,6 +26,9 @@ QuineMcCluskey(int a)
    Noimportaterms.append(a,'-');
 
 }
+~QuineMcCluskey(){
+  //liberar memoria
+}
 
 //function to get the boolean term letters
 vector<string> getVars()
@@ -234,7 +237,7 @@ int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de 
           }
           igterator+=1;
     }}
-    // Imprime la matriz
+    /* Imprime la matriz
   for (int i = 0; i < N; i++)
   {
     for (int j = 0; j < 2*sizeof_numbers; j++)
@@ -242,7 +245,7 @@ int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de 
       printf("%d ", matriz[i][j]);
     }
     printf("\n");
-  }
+  }*/
   //GUarda memoria de forma dinamica para la matriz de valores
     int**values=new int*[sizeof_numbers];
   for (size_t i = 0; i < sizeof_numbers; i++)
@@ -288,7 +291,7 @@ int main ()
   
    while(op=='s')
    {
-    int sz=0;
+    int sz=-1;
     int no;
       
       int **valores_FF;
@@ -299,19 +302,21 @@ int main ()
           cout << "Numero de variables invalido debe de tener un rango tipo: (1-8)" << endl;
           continue;
       }
-      cout<<endl<<"Escriba el numero de entradas:"<<endl;
-      cin>>entradas;
-      QuineMcCluskey q(no);
+      /*cout<<endl<<"Escriba el numero de entradas:"<<endl;
+      cin>>entradas;*/
+      
       string temp="";
       string in="";
-      string secuencia;
-      cout<<"Ingrese la cuenta que quiere seguir"<<endl<<"(Rango=0-"<<pow(2,no)-1<<") separados por una coma:"<<endl;
+      string secuencia="";
+      cout<<"Ingrese la cuenta que quiere seguir"<<endl<<"(Rango=0-"<<pow(2,no-1)-1<<") separados por una coma:"<<endl;
       cin>>in;
       cout<<"Ingrese la secuencia que se desea detectar, por default se regresa a 0"<<endl;
       cin>>secuencia;
      do
-   {    temp.clear();
-        temp=Paso_extra(in,secuencia,entradas,sz);
+   {  
+       QuineMcCluskey q(no);
+        temp="";
+        temp=Paso_extra(in,secuencia,no-1,sz);
         vector<string> minterms;
         istringstream f(temp);
         string s;
@@ -327,7 +332,7 @@ int main ()
         for (size_t i = 0; i < intsmin.size(); i++)
           {
             Donuts[i]=intsmin[i];
-            cout<<Donuts[i]<<endl;
+            //cout<<Donuts[i]<<endl;
           }
         valores_FF=Table(pow(2,no),Donuts,intsmin.size(),no);
           for (int i = 0; i < no; i++)
@@ -335,7 +340,7 @@ int main ()
               for (int j = 0; j <intsmin.size(); j++)
               { if(valores_FF[i][j]>100||valores_FF[i][j]<0)
                   valores_FF[i][j]=-1;
-                cout<<valores_FF[i][j]<<" ";
+                //cout<<valores_FF[i][j]<<" ";
                 
               }
               cout<<endl;
@@ -354,9 +359,16 @@ int main ()
             cout <<q.getValue(minterms[i])<<"+";
             cout<<q.getValue(minterms[i])<<endl;
         }
-            
+        
+        intsmin.clear();
+        temp.clear(); 
+        minterms.clear();
+        q.~QuineMcCluskey();
+        free(valores_FF);
         sz++;
-   } while (sz<entradas);
+        
+        
+   } while (sz<no);
    
       
 
