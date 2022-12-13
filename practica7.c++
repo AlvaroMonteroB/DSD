@@ -34,7 +34,7 @@ QuineMcCluskey(int a)
 vector<string> getVars()
 {
    vector<string> v;
-   string letters[]={"Q2","Q1","Q0","X"};//{"D0","D1","D2","D3","D4","D5","D6","D7"};//
+   string letters[]={"X","Q0","Q1","Q2","Q3","Q4","Q5","D6","D7"};//{"D0","D1","D2","D3","D4","D5"};//
    for(int i=0;i<this->VARIABLES;i++)
     v.push_back(letters[i]);
 
@@ -187,17 +187,17 @@ bool VectorsEqual(vector<string> a,vector<string> b)
 int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de outputs//
 {  int n_values=0;
   int valor=2*sizeof_numbers;
-  cout<<valor<<endl;
+  //cout<<valor<<endl;
    int matriz[N][valor];//Matriz tabla de verdad=(int*)calloc(N,valor);
    char resultado[8];
    string numbers[length+1];
   for(int i=0;i<length;i++)
     {itoa(Donut[i], resultado, 2);
     numbers[i]=resultado;}
-    for (size_t i = 0; i < numbers->size(); i++)
+    /*for (size_t i = 0; i < numbers->size(); i++)
     {
       cout<<numbers[i]<<endl;
-    }
+    }*/
     
   // Inicializa todos los elementos de la matriz con el valor '0'
  for (int i = 0; i < N; i++)
@@ -288,7 +288,11 @@ int main ()
   
   int entradas;
    char op='s';
-  
+    cout<<"                   ======================================="<<endl;
+    cout<<"=========================================================================="<<endl;
+    cout<<"==================Obtencion de ecuaciones de Flip-Flop tipo D============="<<endl;
+    cout<<"=========================================================================="<<endl;
+    cout<<"                   ======================================="<<endl;
    while(op=='s')
    {
     int sz=-1;
@@ -316,7 +320,11 @@ int main ()
    {  
        QuineMcCluskey q(no);
         temp="";
-        temp=Paso_extra(in,secuencia,no-1,sz);
+       
+        temp=Paso_extra(in,secuencia,no-1,sz+1);
+        if(temp==""){
+          break;
+        }
         vector<string> minterms;
         istringstream f(temp);
         string s;
@@ -343,7 +351,7 @@ int main ()
                 //cout<<valores_FF[i][j]<<" ";
                 
               }
-              cout<<endl;
+              //cout<<endl;
             }
         sort(minterms.begin(),minterms.end());
 
@@ -368,7 +376,7 @@ int main ()
         sz++;
         
         
-   } while (sz<no);
+   } while (sz<no-1);
    
       
 
