@@ -119,7 +119,6 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
             output.pop_back();
         }
         
-               
         
         D_output.clear();
         return output;// retornamos el string en formato de miniterminos [num_binario],[num_binario],[num_binario]...

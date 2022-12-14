@@ -325,10 +325,6 @@ int main ()
         if(temp==""){
           break;
         }
-        if (temp.back()=='\n')
-        {
-          temp.pop_back();
-        }
         cout<<"secuencia: "<<temp<<endl;
         vector<string> minterms;
         debug(temp);
