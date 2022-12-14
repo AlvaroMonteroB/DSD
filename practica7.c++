@@ -288,6 +288,7 @@ int main ()
   
   int entradas;
    char op='s';
+   bool dod=false;
     cout<<"                   ======================================="<<endl;
     cout<<"=========================================================================="<<endl;
     cout<<"==================Obtencion de ecuaciones de Flip-Flop tipo D============="<<endl;
@@ -297,6 +298,10 @@ int main ()
    {
     int sz=-1;
     int no;
+      if (dod)
+      {
+        print_title();
+      }
       
       int **valores_FF;
       cout<<endl<<"Escriba el numero de variables:"<<endl;
@@ -328,9 +333,9 @@ int main ()
         }
         cout<<"secuencia: "<<temp<<endl;
         vector<string> minterms;
-        debug(temp);
+        //debug(temp);
         temp[temp.size()]='\0';
-        cout<<temp.find('\0')<<endl;
+        //cout<<temp.find('\0')<<endl;
         istringstream f(temp);
         string s;
         vector<int> intsmin;
@@ -382,12 +387,13 @@ int main ()
         sz++;
         
         
-   } while (sz<no-1);
+   } while (sz<no-2);
    
       
 
       cout<<"Quieres meter otra secuencia? (s/n)"<<endl;
       cin>>op;
+      dod=true;
    }
 }
 

@@ -62,7 +62,7 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
          int t=strtol(s.data(),NULL,10);
          intsmin.push_back(t);
          D_output.push_back(pad(dec_ToBin(t),variables));//Variables en formato binario
-         cout<<D_output.back()<<endl;
+         //cout<<D_output.back()<<endl;
          t=0;
       }
         if(D_output.size()!=secuencia.size()){
@@ -104,7 +104,7 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
                  
                  d=false;
                  sequency=false;
-                 cout<<output<<endl;
+                 //cout<<output<<endl;
       }
         //output[output.length()]=('\n');
         if(output.back()==' '){
@@ -147,4 +147,12 @@ void debug(const string temp){
 
     
 
+}
+
+void print_title(void){
+        cout<<"                   ======================================="<<endl;
+    cout<<"=========================================================================="<<endl;
+    cout<<"==================Obtencion de ecuaciones de Flip-Flop tipo D============="<<endl;
+    cout<<"=========================================================================="<<endl;
+    cout<<"                   ======================================="<<endl;
 }
