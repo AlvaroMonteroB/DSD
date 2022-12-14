@@ -114,12 +114,12 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
         {
             output.pop_back();
         }
-        if (output.back()=='\n')
+        if (output[output.length()-1]==',')
         {
-            output.pop_back();
+            output[output.length()]='\0';
         }
         
-        
+        output.append(1,'\0');
         D_output.clear();
         return output;// retornamos el string en formato de miniterminos [num_binario],[num_binario],[num_binario]...
                       // como se hizo al principio
@@ -131,14 +131,14 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
 
 
 
-void debug(string temp){
+void debug(const string temp){
     for (int i = 0; i < temp.size(); i++)
     {
         if (temp[i]==',')
         {
             cout<<endl;
         }else{
-            cout<<temp[i]<<",";
+            cout<<(int)temp[i]<<",";
         }
         
         

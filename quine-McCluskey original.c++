@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <cstring>
 #include <math.h>
-#include "ExitationTo_Truth.h"
 
 using namespace std;
 
@@ -26,15 +25,12 @@ QuineMcCluskey(int a)
    Noimportaterms.append(a,'-');
 
 }
-~QuineMcCluskey(){
-  //liberar memoria
-}
 
 //function to get the boolean term letters
 vector<string> getVars()
 {
    vector<string> v;
-   string letters[]={"X","Q0","Q1","Q2","Q3","Q4","Q5","D6","D7"};//{"D0","D1","D2","D3","D4","D5"};//
+   string letters[]={"X","D0","D1","D2","D3","D4","D5","D6","D7"};
    for(int i=0;i<this->VARIABLES;i++)
     v.push_back(letters[i]);
 
@@ -64,9 +60,6 @@ string pad(string bin)
        bin="0"+bin;
    return bin;
 }
-
-
-
 
 //function to check if two terms differ by just one bit
 bool isGreyCode(string a,string b)
@@ -184,20 +177,20 @@ bool VectorsEqual(vector<string> a,vector<string> b)
 };
 
 // Crea una matriz cuadrada de tamaño 2^N
-int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de outputs//
+int **Table(int N, int Donut[],int length,int sizeof_numbers)
 {  int n_values=0;
   int valor=2*sizeof_numbers;
-  //cout<<valor<<endl;
-   int matriz[N][valor];//Matriz tabla de verdad=(int*)calloc(N,valor);
+  cout<<valor<<endl;
+   int matriz[N][valor];
    char resultado[8];
    string numbers[length+1];
   for(int i=0;i<length;i++)
     {itoa(Donut[i], resultado, 2);
     numbers[i]=resultado;}
-    /*for (size_t i = 0; i < numbers->size(); i++)
+    for (size_t i = 0; i < numbers->size(); i++)
     {
       cout<<numbers[i]<<endl;
-    }*/
+    }
     
   // Inicializa todos los elementos de la matriz con el valor '0'
  for (int i = 0; i < N; i++)
@@ -237,7 +230,7 @@ int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de 
           }
           igterator+=1;
     }}
-    /* Imprime la matriz
+    // Imprime la matriz
   for (int i = 0; i < N; i++)
   {
     for (int j = 0; j < 2*sizeof_numbers; j++)
@@ -245,7 +238,7 @@ int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de 
       printf("%d ", matriz[i][j]);
     }
     printf("\n");
-  }*/
+  }
   //GUarda memoria de forma dinamica para la matriz de valores
     int**values=new int*[sizeof_numbers];
   for (size_t i = 0; i < sizeof_numbers; i++)
@@ -267,37 +260,13 @@ int **Table(int N, int Donut[],int length,int sizeof_numbers)//donut arreglo de 
   return values;
 }
 
-string decToBin(int n)
-{
-   if ( n == 0 )
-       return n+"";
-
-   if ( n % 2 == 0 )
-       return decToBin(n / 2) + "0";
-   else
-       return decToBin(n / 2) + "1";
-}
-
-
-
-
-
-
 int main ()
 {
-  
-  int entradas;
    char op='s';
-    cout<<"                   ======================================="<<endl;
-    cout<<"=========================================================================="<<endl;
-    cout<<"==================Obtencion de ecuaciones de Flip-Flop tipo D============="<<endl;
-    cout<<"=========================================================================="<<endl;
-    cout<<"                   ======================================="<<endl;
    while(op=='s')
    {
-    int sz=-1;
-    int no;
-      
+      int no;
+      int entradas;
       int **valores_FF;
       cout<<endl<<"Escriba el numero de variables:"<<endl;
       cin>>no;
@@ -306,96 +275,57 @@ int main ()
           cout << "Numero de variables invalido debe de tener un rango tipo: (1-8)" << endl;
           continue;
       }
-      /*cout<<endl<<"Escriba el numero de entradas:"<<endl;
-      cin>>entradas;*/
-      
+      cout<<endl<<"Escriba el numero de entradas:"<<endl;
+      cin>>entradas;
+      QuineMcCluskey q(no);
       string temp="";
-      string in="";
-      string secuencia="";
-      string copy;
-      cout<<"Ingrese la cuenta que quiere seguir"<<endl<<"(Rango=0-"<<pow(2,no-1)-1<<") separados por una coma:"<<endl;
-      cin>>in;
-      cout<<"Ingrese la secuencia que se desea detectar, por default se regresa a 0"<<endl;
-      cin>>secuencia;
-     do
-   {  
-       QuineMcCluskey q(no);
-       
-       
-        temp=Paso_extra(in,secuencia,no-1,sz+1);
-        if(temp==""){
-          break;
-        }
-        cout<<"secuencia: "<<temp<<endl;
-        vector<string> minterms;
-        debug(temp);
-        temp[temp.size()]='\0';
-        cout<<temp.find('\0')<<endl;
-        istringstream f(temp);
-        string s;
-        vector<int> intsmin;
-        while (getline(f, s, ','))
-          {
-              //cout << s << endl;
-            int t=strtol(s.data(),NULL,2);
-            intsmin.push_back(t);
-            minterms.push_back(q.pad(q.decToBin(t)));
-          }
-        int Donuts[intsmin.size()];
-        for (size_t i = 0; i < intsmin.size(); i++)
-          {
-            Donuts[i]=intsmin[i];
-            //cout<<Donuts[i]<<endl;
-          }
-        valores_FF=Table(pow(2,no),Donuts,intsmin.size(),no);
-          for (int i = 0; i < no; i++)
-            { 
-              for (int j = 0; j <intsmin.size(); j++)
-              { if(valores_FF[i][j]>100||valores_FF[i][j]<0)
-                  valores_FF[i][j]=-1;
-                //cout<<valores_FF[i][j]<<" ";
-                
-              }
-              //cout<<endl;
+      cout<<"Ingrese la secuencia minterminos suponiendo al primer bit como la ultima entrada y el ultimo bit como la primera salida(Rango=0-"<<pow(2,no)-1<<") separados por una coma:"<<endl;
+      cin>>temp;
+      //dividimos la entrada 
+      vector<string> minterms;
+      istringstream f(temp);
+      string s;
+      vector<int> intsmin;
+      while (getline(f, s, ','))
+      {
+          //cout << s << endl;
+         int t=strtol(s.data(),NULL,2);
+         intsmin.push_back(t);
+         minterms.push_back(q.pad(q.decToBin(t)));
+      }
+      int Donuts[intsmin.size()];
+      for (size_t i = 0; i < intsmin.size(); i++)
+      {
+        Donuts[i]=intsmin[i];
+        cout<<Donuts[i]<<endl;
+      }
+      valores_FF=Table(pow(2,no),Donuts,intsmin.size(),no);
+        for (int i = 0; i < no; i++)
+          { 
+            for (int j = 0; j <intsmin.size(); j++)
+            { if(valores_FF[i][j]>100||valores_FF[i][j]<0)
+              valores_FF[i][j]=-1;
+              cout<<valores_FF[i][j]<<" ";
+              
             }
-        sort(minterms.begin(),minterms.end());
+            cout<<endl;
+          }
+      sort(minterms.begin(),minterms.end());
 
-        do{
-          minterms=q.reduce(minterms);
-          sort(minterms.begin(),minterms.end());
-        }while(!q.VectorsEqual(minterms,q.reduce(minterms)));
+      do
+      {
+         minterms=q.reduce(minterms);
+         sort(minterms.begin(),minterms.end());
+      }while(!q.VectorsEqual(minterms,q.reduce(minterms)));
 
-      
-        
-        cout << "La expresion booleana reducida en forma SOP:" << endl;
-        int cc;
-        for ( cc=0;cc<minterms.size()-1; cc++){
-            cout <<q.getValue(minterms[cc])<<"+";
-            
-        }cout<<q.getValue(minterms[cc])<<endl;
-        
-        intsmin.clear();
-        temp.clear(); 
-        minterms.clear();
-        q.~QuineMcCluskey();
-        free(valores_FF);
-        sz++;
-        
-        
-   } while (sz<no-1);
-   
-      
+
+      int i;
+      cout << "La expresion booleana reducida en forma SOP:" << endl;
+      for (i=0;i<minterms.size()-1; i++)
+          cout <<q.getValue(minterms[i])<<"+";
+      cout<<q.getValue(minterms[i])<<endl;
 
       cout<<"Quieres meter otra secuencia? (s/n)"<<endl;
       cin>>op;
    }
 }
-
-
-/*
-q1 q0 x q1 q0 |d1 d0
-0  0  1  0  1 |0  1
-0  1  0  1  0 |1  0
-1  0  1  0  0 |0  0
-
-*/
