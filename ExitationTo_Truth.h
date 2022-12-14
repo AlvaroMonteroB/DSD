@@ -41,10 +41,6 @@ string dec_ToBin(int n)
 }
 
 string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se registran n-1 variables, o sea solo los ff
-  if (entrada<=variables-1)
-  {
-    cout<<"Ta bn, esto el numero de variables"<<endl;
-  }
   
   vector<string> miniterm;//por default debe retornar a 0 si no se cumple la condición
   vector<string> D_output;//nuestras D que vamos a usar
@@ -96,14 +92,14 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
                             output.append(1,'1');//Si tenemos que x es 1, y ahi prende, agregamos x sin negar
                         }else{output.append(1,'0');}//si tenemos que x es 0, agregamos x negada o '0'
                          output.append(D_output[i]); //Si tenemos 1 en esa entrada, cargamos el dato que tenemos
-                 
+                        if (onescomp==ones)
+                              {
+                                 output.append(1,'\n');
+
+                              }else if(i<D_output.size()-1){output.append(1,',');  }
                  
                  }                             //en esa fila o locacion del vector,si tenemos 0 omitimos
-                 if (onescomp==ones)
-                 {
-                    output.append(1,'\n');
-
-                 }else if(d&&i<D_output.size()-1){output.append(1,',');  }//agrega la coma output+=','
+ //agrega la coma output+=','
                                                               
                  
                  d=false;
@@ -111,16 +107,45 @@ string Paso_extra(string cuenta,string secuencia,int variables,int entrada){//se
                  cout<<output<<endl;
       }
         //output[output.length()]=('\n');
-        cout<<"minitermino retornado :"<<output<<endl;
+        if(output.back()==' '){
+            output.pop_back();
+        }
         if (output.back()=='\n')
         {
             output.pop_back();
         }
+        if (output.back()=='\n')
+        {
+            output.pop_back();
+        }
+        
+               
         
         D_output.clear();
         return output;// retornamos el string en formato de miniterminos [num_binario],[num_binario],[num_binario]...
                       // como se hizo al principio
     
 
+
+}
+
+
+
+
+void debug(string temp){
+    for (int i = 0; i < temp.size(); i++)
+    {
+        if (temp[i]==',')
+        {
+            cout<<endl;
+        }else{
+            cout<<temp[i]<<",";
+        }
+        
+        
+        
+    }system("pause");
+
+    
 
 }
